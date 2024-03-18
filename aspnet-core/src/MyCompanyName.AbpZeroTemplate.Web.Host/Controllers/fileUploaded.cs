@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace MyCompanyName.AbpZeroTemplate.Web.Controllers
 {
@@ -39,6 +40,15 @@ namespace MyCompanyName.AbpZeroTemplate.Web.Controllers
                    + Guid.NewGuid().ToString().Substring(0, 4)
                    + Path.GetExtension(fileName);
         }
+        private string GetContentType(string fileName)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(fileName, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
+        }
 
         [HttpGet]
         public async Task <IActionResult> DownloadFile(string fileName)
@@ -46,7 +56,7 @@ namespace MyCompanyName.AbpZeroTemplate.Web.Controllers
             var filePath = Path.Combine(_env.ContentRootPath, "Docs", fileName);
             var contentType = GetContentType(fileName);
             var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-            return File(bytes, contentType, Path.GetFileName(fileName));
+            return File(bytes, contentType, Path.GetFileName(fileName));    //load binary for translation (more lightweight)
 
         }
     }
