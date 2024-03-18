@@ -1,0 +1,4 @@
+<select class="form-control" [(ngModel)]="selectedValue">
+    <option value=""></option>
+    <option *ngFor="let value of allValues" [value]="value">{{ value }}</option>
+</select>

@@ -1,0 +1,14 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameLogo
+@model HeaderViewModel
+@{
+    Layout = null;
+    var theme = await GetTheme();
+}
+
+<div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
+    <a href="@Url.Action("Index", "Home", new {area = string.Empty})">
+        @await Component.InvokeAsync(typeof(AppAreaNameLogoViewComponent), new {logoSkin = "dark-sm", logoClass = "logo-default h-25px"})
+        @await Component.InvokeAsync(typeof(AppAreaNameLogoViewComponent), new {logoSkin = theme.BaseSettings.Layout.DarkMode ? "dark": "light", logoClass = "logo-sticky h-25px"})
+    </a>
+</div>

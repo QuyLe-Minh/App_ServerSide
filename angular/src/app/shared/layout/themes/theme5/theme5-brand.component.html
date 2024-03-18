@@ -1,0 +1,43 @@
+<a routerLink="/" target="_blank">
+    <img
+        *ngIf="!appSession.tenant || !appSession.tenant.logoId"
+        [src]="defaultLogo"
+        alt="logo"
+        class="d-none d-lg-inline h-30px"
+    />
+    <img
+        *ngIf="!appSession.tenant || !appSession.tenant.logoId"
+        [src]="defaultLogo"
+        alt="logo"
+        class="d-lg-none h-25px"
+    />
+    
+    <img
+        *ngIf="appSession.tenant && appSession.tenant.logoId"
+        [src]="
+            remoteServiceBaseUrl +
+            '/TenantCustomization/GetTenantLogo?skin=' +
+            currentTheme.baseSettings.menu.asideSkin +
+            '&tenantId=' +
+            appSession.tenant.id +
+            '&id=' +
+            appSession.tenant.logoId
+        "
+        alt="logo"
+        class="d-none d-lg-inline h-30px"
+    />
+    <img
+        *ngIf="appSession.tenant && appSession.tenant.logoId"
+        [src]="
+            remoteServiceBaseUrl +
+            '/TenantCustomization/GetTenantLogo?skin=' +
+            currentTheme.baseSettings.menu.asideSkin +
+            '&tenantId=' +
+            appSession.tenant.id +
+            '&id=' +
+            appSession.tenant.logoId
+        "
+        alt="logo"
+        class="d-lg-none h-25px"
+    />
+</a>

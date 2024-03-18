@@ -1,0 +1,22 @@
+<a href="/" [class]="customHrefClass" (window:resize)="onResize()">
+    <img
+        alt="Logo"
+        *ngIf="!appSession.tenant || !appSession.tenant.logoId"
+        [src]="defaultLogo"
+        class="h-35px logo"
+    />
+    <img
+        alt="Logo"
+        *ngIf="appSession.tenant && appSession.tenant.logoId"
+        [src]="
+            remoteServiceBaseUrl +
+            '/TenantCustomization/GetTenantLogo?skin=' +
+            currentTheme.baseSettings.menu.asideSkin +
+            '&tenantId=' +
+            appSession.tenant.id +
+            '&id=' +
+            appSession.tenant.logoId
+        "
+        class="h-35px logo"
+    />
+</a>

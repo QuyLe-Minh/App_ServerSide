@@ -1,0 +1,22 @@
+<a routerLink="/" target="_blank">
+    <img
+        *ngIf="!appSession.tenant || !appSession.tenant.logoId"
+        src="/assets/common/images/app-logo-on-dark.svg"
+        alt="logo"
+        class="h-25px h-lg-30px"
+    />
+    <img
+        *ngIf="appSession.tenant && appSession.tenant.logoId"
+        [src]="
+            remoteServiceBaseUrl +
+            '/TenantCustomization/GetTenantLogo?skin=' +
+            currentTheme.baseSettings.menu.asideSkin +
+            '&tenantId=' +
+            appSession.tenant.id +
+            '&id=' +
+            appSession.tenant.logoId
+        "
+        alt="logo"
+        class="h-25px h-lg-30px"
+    />
+</a>
