@@ -5,6 +5,7 @@ using MyCompanyName.AbpZeroTemplate.Authorization.Delegation;
 using MyCompanyName.AbpZeroTemplate.Authorization.Roles;
 using MyCompanyName.AbpZeroTemplate.Authorization.Users;
 using MyCompanyName.AbpZeroTemplate.Chat;
+using MyCompanyName.AbpZeroTemplate.CvsDocs;
 using MyCompanyName.AbpZeroTemplate.Editions;
 using MyCompanyName.AbpZeroTemplate.Friendships;
 using MyCompanyName.AbpZeroTemplate.MultiTenancy;
@@ -24,6 +25,7 @@ namespace MyCompanyName.AbpZeroTemplate.EntityFrameworkCore
 
         public virtual DbSet<ChatMessage> ChatMessages { get; set; }
 
+        public virtual DbSet<CvsDoc> Document { get; set; }
         public virtual DbSet<SubscribableEdition> SubscribableEditions { get; set; }
 
         public virtual DbSet<SubscriptionPayment> SubscriptionPayments { get; set; }

@@ -1,45 +1,47 @@
-﻿using Abp.Domain.Repositories;
+﻿using Abp.Application.Services.Dto;
+using Abp.Domain.Repositories;
+using AutoMapper;
 using MyCompanyName.AbpZeroTemplate.ICvsDoc;
+using MyCompanyName.AbpZeroTemplate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Abp.Linq.Extensions;
+using Abp.Extensions;
+using AutoMapper.QueryableExtensions;
 
-namespace MyCompanyName.AbpZeroTemplate.CvsDoc
+
+
+public class CvsDocAppService : CvsDocListDto, ICvsDocService
 {
-    public class CvsDocService : CvsDocDemoAppServiceBase, ICvsDocService
+    private readonly IRepository<CvsDoc> _cvsDocRepository;
+
+    public CvsDocAppService(IRepository<CvsDoc> cvsDocRepository)
     {
-        private readonly IRepository<CvsDoc> _CvsDocRepository;
-
-        public CvsDocService(IRepository<CvsDoc> CvsDocRepository)
-        {
-            _CvsDocRepository = CvsDocRepository;
-        }
-
-        public ListResultDto<CvsDocDto> GetPeople(GetCvsDocInput input)
-        {
-            var people = _personRepository
-                .GetAll()
-                .WhereIf(
-                    !input.Filter.IsNullOrEmpty(),
-                    p => p.DocTitle.Contains(input.Filter) ||
-                         p.DocCode.Contains(input.Filter) ||
-                         p.DocType.Contains(input.Filter)
-                )
-                .WhereIf(
-                    !input.DocStatus.IsNullOrEmpty(),
-                    p => p.DocStatus == input.DocStatus
-                )
-                .OrderBy(p => p.DocTitle)
-                .ThenBy(p => p.DocCode)
-                .ProjectTo<CvsDocDto>(ObjectMapper.ConfigurationProvider)
-                .ToList();
-
-            return new ListResultDto<CvsDocDto>(people);
-        }
+        _cvsDocRepository = cvsDocRepository;
     }
 
+    public ListResultDto<CvsDocListDto> GetCvsDocs(GetCvsDocInput input)
+    {
+        var cvsDocs = _cvsDocRepository
+            .GetAll()
+            .WhereIf(
+                !input.Filter.IsNullOrEmpty(),
+                c => c.docTitle.Contains(input.Filter) ||
+                     c.docCode.Contains(input.Filter) ||
+                     c.docType.Contains(input.Filter)
+            )
+            .WhereIf(
+                !input.DocStatus.IsNullOrEmpty(),
+                c => c.DocStatus == input.DocStatus
+            )
+        .OrderBy(c => c.docTitle)
+        .ThenBy(c => c.docCode)
+            .ProjectTo<CvsDocListDto>(ObjectMapper.ConfigurationProvider)
+            .ToList();
+
+        return new ListResultDto<CvsDocListDto>(cvsDocs);
+    }
 }
-
-

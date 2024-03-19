@@ -41,6 +41,7 @@ using MyCompanyName.AbpZeroTemplate.Notifications.Dto;
 using MyCompanyName.AbpZeroTemplate.Organizations.Dto;
 using MyCompanyName.AbpZeroTemplate.Sessions.Dto;
 using MyCompanyName.AbpZeroTemplate.WebHooks.Dto;
+using MyCompanyName.AbpZeroTemplate.CvsDocs;
 
 namespace MyCompanyName.AbpZeroTemplate
 {
@@ -164,7 +165,9 @@ namespace MyCompanyName.AbpZeroTemplate
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
-            configuration.CreateMap<CvsDoc, CvsDocListDto > ();
+            configuration.CreateMap<CvsDoc, CvsDocListDto>();
+
+
         }
     }
 }

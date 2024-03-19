@@ -15,8 +15,4 @@
     <ProjectReference Include="..\MyCompanyName.AbpZeroTemplate.Core.Shared\MyCompanyName.AbpZeroTemplate.Core.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CvsDoc\" />
-  </ItemGroup>
-
 </Project>
