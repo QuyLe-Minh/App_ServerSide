@@ -6,15 +6,12 @@ using MyCompanyName.AbpZeroTemplate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Abp.Linq.Extensions;
 using Abp.Extensions;
 using AutoMapper.QueryableExtensions;
+using MyCompanyName.AbpZeroTemplate.CvsDocs;
 
-
-
-public class CvsDocAppService : CvsDocListDto, ICvsDocService
+public class CvsDocAppService : AbpZeroTemplateAppServiceBase, ICvsDocService
 {
     private readonly IRepository<CvsDoc> _cvsDocRepository;
 
@@ -23,7 +20,7 @@ public class CvsDocAppService : CvsDocListDto, ICvsDocService
         _cvsDocRepository = cvsDocRepository;
     }
 
-    public ListResultDto<CvsDocListDto> GetCvsDocs(GetCvsDocInput input)
+    public ListResultDto<CvsDocListDto> GetCvsDoc(GetCvsDocInput input)
     {
         var cvsDocs = _cvsDocRepository
             .GetAll()
@@ -39,9 +36,9 @@ public class CvsDocAppService : CvsDocListDto, ICvsDocService
             )
         .OrderBy(c => c.docTitle)
         .ThenBy(c => c.docCode)
-            .ProjectTo<CvsDocListDto>(ObjectMapper.ConfigurationProvider)
+            //.ProjectTo<CvsDocListDto>(ObjectMapper.ConfigurationProvider)
             .ToList();
 
-        return new ListResultDto<CvsDocListDto>(cvsDocs);
+        return new ListResultDto<CvsDocListDto>(ObjectMapper.Map<List<CvsDocListDto>>(cvsDocs));
     }
 }
